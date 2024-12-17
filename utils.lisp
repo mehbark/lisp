@@ -690,6 +690,7 @@
         `(let-match1 ,pattern (progn ,@body)
            (begin ,@rest)))
 
+       ;; consider LABELS
        ((structure ('=f name args . body))
         `(flet ((,name ,args (begin ,@body)))
            (begin ,@rest)))
