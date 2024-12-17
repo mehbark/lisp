@@ -694,5 +694,13 @@
         `(flet ((,name ,args (begin ,@body)))
            (begin ,@rest)))
 
-       (_ `(progn ,stmt (begin ,@rest)))))
+       ((structure ('=m name args . body))
+        `(macrolet ((,name ,args (begin ,@body)))
+           (begin ,@rest)))
+
+       ((structure ('=sm sym val))
+        `(symbol-macrolet ((,sym ,val))
+           (begin ,@rest)))
+
+       (_ `(locally ,stmt (begin ,@rest)))))
     (_ nil)))
