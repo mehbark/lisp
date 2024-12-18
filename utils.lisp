@@ -664,6 +664,15 @@
 ;; (defmacro <>-> (val &body body)
 ;;   `(as-> ,val <> ,@body))
 
+;; the value of this is that (-> x car) is (car x) instead of (let1 it x (car x)), enabling setf
+(defmacro -> (x &body body)
+  (match body
+    ((cons (cons f xs) rest)
+     `(-> (,f ,x ,@xs) ,@rest))
+    ((cons f rest)
+     `(-> (,f ,x) ,@rest))
+    (nil x)))
+
 (defmacro doprod ((&rest binds) &body body)
   (if (null binds)
       `(progn ,@body)
@@ -690,9 +699,8 @@
         `(let-match1 ,pattern (progn ,@body)
            (begin ,@rest)))
 
-       ;; consider LABELS
        ((structure ('=f name args . body))
-        `(flet ((,name ,args (begin ,@body)))
+        `(labels ((,name ,args (begin ,@body)))
            (begin ,@rest)))
 
        ((structure ('=m name args . body))

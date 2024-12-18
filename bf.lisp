@@ -54,6 +54,8 @@
                               `(loop until (zerop cell)
                                      do (progn ,@inner)))
                           out))))
+          ;; WE NEED TO PUT BECAUSE LOOPS IDOIT! 
+          finally (put)
           finally (return (nreverse out)))))
 
 (defparameter mem-size 32768)
@@ -65,6 +67,8 @@
       (begin
         (= mem (make-array ,mem-size :element-type '(unsigned-byte 8)))
         (= mp 0)
+        (declare (type (mod ,mem-size) mp))
+
         (=sm cell (aref mem mp))
 
         (=f inc  (n) (incmodf cell 256 n))
