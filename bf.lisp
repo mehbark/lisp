@@ -3,7 +3,6 @@
 (defmacro incmodf (place mod &optional (delta 1))
   `(setf ,place (mod (+ ,place ,delta) ,mod)))
 
-
 ; TODO: ooo could totally gen from sym (e.g. '++-[]>)
 ; then i'd need some sort of var syntax ugh
 (defpattern cmd (op val)
@@ -55,7 +54,6 @@
                               `(loop until (zerop cell)
                                      do (progn ,@inner)))
                           out))))
-          finally (put)
           finally (return (nreverse out)))))
 
 (defparameter mem-size 32768)
