@@ -629,7 +629,8 @@
 
 (abbrevs dbind  destructuring-bind
          mvbind multiple-value-bind
-         mvsetq multiple-value-setq)
+         mvsetq multiple-value-setq
+         λ      lambda)
 
 ;; not great
 (defmacro propmacro (propname)
