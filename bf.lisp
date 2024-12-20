@@ -87,4 +87,7 @@
         t))))
 
 (defun main ()
-  (funcall (comp)))
+  (funcall
+   (aif (second *posix-argv*)
+        (with-input-from-file (f it) (comp f))
+        (comp))))
