@@ -463,12 +463,17 @@
         ((null (cdr args)) (car args))
         (t `(aif ,(car args) (aand ,@(cdr args))))))
 
+; improvements inspired by SBCL https://github.com/sbcl/sbcl/blob/42d939ea06063bcddd29d628a4ba6613edf4bcf8/src/code/primordial-extensions.lisp#L321 (should probably destructure too :P)
 (defmacro acond (&rest clauses)
   (if (null clauses)
       nil
       (once-only ((test (caar clauses)))
         `(if ,test
-             (let ((it ,test)) ,@(cdar clauses))
+             ,(aif (cdar clauses)
+                   `(let ((it ,test))
+                      (declare (ignorable it))
+                      ,@it)
+                   test)
              (acond ,@(cdr clauses))))))
 
 (defmacro alambda (args &body body)
