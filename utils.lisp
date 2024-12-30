@@ -1,5 +1,6 @@
 ;;; fun
 (proclaim '(inline last1 single append1 conc1))
+;; TODO: packagify and such
 
 ;; has a lot of goodies
 ;; hey whaddayaknow, pg has a with-gensyms
