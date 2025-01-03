@@ -709,7 +709,7 @@
            (,binds (begin ,@rest))))
 
        ((list* '= pattern body)
-        `(let-match1 ,pattern (progn ,@body)
+        `(let-match1 ,pattern (begin ,@body)
            (begin ,@rest)))
 
        ((structure ('=f name args . body))
