@@ -686,6 +686,12 @@
       `(loop for ,(first (car binds)) in ,(second (car binds))
              do (doprod ,(cdr binds) ,@body))))
 
+(defmacro mapprod ((&rest binds) &body body)
+  (if (null binds)
+      `(progn ,@body)
+      `(loop for ,(first (car binds)) in ,(second (car binds))
+             collect (mapprod ,(cdr binds) ,@body))))
+
 (defpattern structure (expr)
   (match expr
     ((list 'quote x) `',x)
