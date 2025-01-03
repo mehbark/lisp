@@ -720,3 +720,21 @@
 
        (_ `(locally ,stmt (begin ,@rest)))))
     (_ nil)))
+
+(defmacro l$ (&body body)
+  (begin
+    (=f $? (sym) (and (symbolp sym) (starts-with #\$ (symbol-name sym))))
+    (=f $-value (sym) (or (parse-integer (string-trim "$" (symbol-name sym))
+                                         :junk-allowed t)
+                          -1))
+
+    (= money (remove-duplicates (remove-if-not #'$? (flatten body))))
+    (= highest (apply #'max (cons 0 (mapcar #'$-value money))))
+
+    `(lambda (,@(loop for i from 1 to highest
+                      collecting (symb '$ i))
+              ,@(when (member '$@ money)
+                  '(&rest $@)))
+       ,@body)))
+
+(begin (=f x2 (n) (+ n n)) (fpromote x2) (mapcar x2 '(1 2 3)))
