@@ -742,5 +742,3 @@
               ,@(when (member '$@ money)
                   '(&rest $@)))
        ,@body)))
-
-(begin (=f x2 (n) (+ n n)) (fpromote x2) (mapcar x2 '(1 2 3)))
